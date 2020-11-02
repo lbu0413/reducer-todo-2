@@ -3,24 +3,39 @@ import logo from './logo.svg';
 import './App.css';
 import { reducer } from './reducers/index'
 import { initialState } from './reducers/index'
-import actions from './actions/index'
+
 
 function App() {
 
   const [state, dispatch] = useReducer(reducer, initialState)
+  const [todoText, setTodoText] = useState("")
+
   console.log(state)
-  const handleAdd = () => {
-    dispatch(actions.addTodo())
+
+  const addTodo = (e) => {
+    e.preventDefault()
+    dispatch({ type: "ADD", payload: todoText })
+    setTodoText("")
+  }
+
+  const handleChange = (e) => {
+    setTodoText(e.target.value)
   }
 
   return (
     <div className="App">
       {state.map((todo) => {
-        return (
-          <div>{todo.item}</div>
-        )
+        return <div>{todo.item}</div>
       })}
-      <button type="button" onClick={handleAdd}>Add Todo</button>
+      <form onSubmit={addTodo}>
+        <input 
+          type="text"
+          name="todo"
+          value={todoText}
+          onChange={handleChange}
+        />
+        <button>Add Todo</button>
+      </form>
     </div>
   );
 }
