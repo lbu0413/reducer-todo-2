@@ -24,10 +24,8 @@ function App() {
 
   return (
     <div className="App">
-      {state.map((todo, index) => {
-        return <div key={index} onClick={() => {
-          dispatch({ type: "COMPLETED", payload: index})
-        }}>{todo.item}</div>
+      {state.map(todo => {
+        return <div key={todo.id}>{todo.item}</div>
       })}
       <form onSubmit={addTodo}>
         <input 
